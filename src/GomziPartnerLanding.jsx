@@ -10,6 +10,7 @@
 import React from "react";
 import "./GomziPartnerLanding.css";
 
+import TopBar from "./components/TopBar";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import CertStrip from "./components/CertStrip";
@@ -26,6 +27,7 @@ import Footer from "./components/Footer";
 
 // Re-export individual components for modular reusability
 export {
+  TopBar,
   Header,
   Hero,
   CertStrip,
@@ -44,6 +46,7 @@ export {
 export default function GomziPartnerLanding() {
   return (
     <div className="gz">
+      <TopBar />
       <Header />
       <main id="main-content">
         <Hero />
