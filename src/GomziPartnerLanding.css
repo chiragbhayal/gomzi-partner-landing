@@ -51,8 +51,13 @@ body {
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-.gz-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-.gz-section { padding: 48px 0; }
+.gz-wrap { max-width: 1200px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+.gz-section { padding-top: 48px; padding-bottom: 48px; }
+.gz-wrap.gz-section,
+.gz-form-wrap.gz-section {
+  padding-left: 24px;
+  padding-right: 24px;
+}
 .gz-bg-cream { background: var(--cream); }
 .gz-bg-beige { background: var(--beige); }
 
@@ -163,12 +168,15 @@ html { scroll-behavior: smooth; }
   .gz-topbar-inner {
     justify-content: center;
     font-size: 11.5px;
-    height: 34px;
-    min-height: 34px;
-    padding: 0 12px;
+    height: 36px;
+    min-height: 36px;
+    padding: 0 18px;
   }
   .gz-topbar-promo {
     text-align: center;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -1229,7 +1237,7 @@ html { scroll-behavior: smooth; }
 
 /* Eligibility */
 .gz-elig { background: var(--brown); color: #fff; }
-.gz-elig .gz-section { padding: 44px 0; }
+.gz-elig .gz-section { padding-top: 44px; padding-bottom: 44px; }
 .gz-elig .gz-eyebrow { color: #e8cfc3; }
 .gz-elig .gz-h2 { color: #fff; font-size: clamp(2rem, 4vw, 3rem); }
 .gz-elig p.gz-lead { color: var(--on-dark); font-size: 16px; }
@@ -1831,7 +1839,15 @@ html { scroll-behavior: smooth; }
    ========================================================= */
 
 @media (max-width: 1024px) {
-  .gz-wrap { max-width: 100%; padding: 0 20px; }
+  .gz-wrap,
+  .gz-wrap.gz-section,
+  .gz-form-wrap,
+  .gz-form-wrap.gz-section,
+  .gz-faq-wrap {
+    max-width: 100%;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
   .gz-hero { gap: 28px; }
   .gz-split { gap: 32px; }
   .gz-cta { padding: 48px 36px; }
@@ -1845,8 +1861,20 @@ html { scroll-behavior: smooth; }
   .gz-nav { padding-top: 10px; padding-bottom: 10px; }
   .gz-nav-logo { height: 40px; }
 
-  /* Sections & Layout */
-  .gz-section { padding: 40px 0; }
+  /* Sections & Layout with Clean Left & Right Gutters */
+  .gz-wrap,
+  .gz-wrap.gz-section,
+  .gz-form-wrap,
+  .gz-form-wrap.gz-section,
+  .gz-faq-wrap {
+    max-width: 100%;
+    padding-left: 22px !important;
+    padding-right: 22px !important;
+  }
+  .gz-section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
   .gz-split { flex-direction: column; gap: 32px; }
   .gz-split > * { flex: 1 1 100%; width: 100%; min-width: 0; }
   .gz-card { padding: 24px 20px; border-radius: 20px; }
@@ -1870,14 +1898,20 @@ html { scroll-behavior: smooth; }
     margin-top: 8px;
   }
   .gz-hero-frame {
-    max-width: 320px;
+    max-width: 330px;
     margin: 0 auto;
+    width: 100%;
+  }
+  .gz-hero-glow {
+    inset: -8px;
+    filter: blur(22px);
   }
 
   /* Final CTA */
   .gz-final-cta-section { padding-top: 16px; padding-bottom: 36px; }
   .gz-cta {
     padding: 36px 24px;
+    border-radius: 24px;
     flex-direction: column;
     text-align: center;
   }
@@ -1893,9 +1927,19 @@ html { scroll-behavior: smooth; }
 }
 
 @media (max-width: 680px) {
-  /* Container Padding */
-  .gz-wrap { padding: 0 16px; }
-  .gz-form-wrap { padding: 0 16px; }
+  /* Container Padding - Clean 20px Side Gutters Across All Components */
+  .gz-wrap,
+  .gz-wrap.gz-section,
+  .gz-form-wrap,
+  .gz-form-wrap.gz-section,
+  .gz-faq-wrap {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .gz-section {
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
 
   /* Typography Scale */
   .gz-h1 {
@@ -2137,15 +2181,15 @@ html { scroll-behavior: smooth; }
     margin-top: 18px;
   }
   .gz-benefit-card {
-    padding: 14px 14px;
-    border-radius: 14px;
+    padding: 16px 16px;
+    border-radius: 16px;
     gap: 12px;
   }
 
   /* Live Partner Portal Widget */
   .gz-portal-widget {
-    padding: 18px 14px;
-    border-radius: 20px;
+    padding: 22px 18px;
+    border-radius: 22px;
   }
   .gz-portal-top-bar {
     margin-bottom: 14px;
@@ -2160,18 +2204,22 @@ html { scroll-behavior: smooth; }
     font-size: 11.5px;
     padding: 3px 10px;
   }
+  .gz-portal-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
   .gz-portal-stat-tile {
-    padding: 12px 10px;
-    border-radius: 12px;
+    padding: 12px 12px;
+    border-radius: 14px;
   }
   .gz-stat-val {
     font-size: 20px;
     margin: 4px 0 2px;
   }
   .gz-portal-activity {
-    padding: 12px 12px;
+    padding: 14px 14px;
     margin-top: 12px;
-    border-radius: 12px;
+    border-radius: 14px;
   }
   .gz-activity-title {
     font-size: 10px;
@@ -2185,8 +2233,8 @@ html { scroll-behavior: smooth; }
     padding: 6px 0;
   }
   .gz-portal-coupon-box {
-    margin-top: 12px;
-    padding: 14px 14px;
+    margin-top: 14px;
+    padding: 16px 16px;
     border-radius: 14px;
     flex-direction: column;
     align-items: stretch;
@@ -2226,8 +2274,8 @@ html { scroll-behavior: smooth; }
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     gap: 8px;
-    margin: 14px -16px 18px;
-    padding: 4px 16px 10px;
+    margin: 14px 0 18px;
+    padding: 4px 2px 10px;
     scrollbar-width: none;
   }
   .gz-cat-tabs::-webkit-scrollbar {
@@ -2244,14 +2292,14 @@ html { scroll-behavior: smooth; }
   /* Product Catalog: Clean 2-Column Mobile Grid */
   .gz-products {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: 12px;
     margin-top: 14px;
   }
   .gz-product {
-    border-radius: 14px;
+    border-radius: 16px;
   }
   .gz-product-body {
-    padding: 10px 10px 12px;
+    padding: 12px 10px 14px;
     gap: 4px;
   }
   .gz-product-badge {
@@ -2323,32 +2371,32 @@ html { scroll-behavior: smooth; }
     gap: 10px;
   }
   .gz-elig-card {
-    padding: 14px 16px;
-    border-radius: 14px;
+    padding: 16px 18px;
+    border-radius: 16px;
   }
 
   /* Application Form Portal Wizard */
   .gz-form-trust-strip {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    gap: 8px;
     margin: 14px 0 20px;
   }
   .gz-trust-pill {
-    padding: 8px 6px;
-    font-size: 10.5px;
+    padding: 8px 8px;
+    font-size: 11px;
     justify-content: center;
     text-align: center;
     border-radius: 10px;
   }
   .gz-portal-stepper {
-    padding: 10px 8px;
-    border-radius: 16px 16px 0 0;
-    gap: 2px;
+    padding: 14px 14px;
+    border-radius: 22px 22px 0 0;
+    gap: 6px;
   }
   .gz-stepper-tab {
     flex: 1;
-    padding: 6px 2px;
+    padding: 6px 4px;
     justify-content: center;
     gap: 6px;
   }
@@ -2356,18 +2404,18 @@ html { scroll-behavior: smooth; }
     display: none;
   }
   .gz-stepper-num {
-    width: 28px;
-    height: 28px;
-    font-size: 12px;
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
   }
   .gz-stepper-label {
-    font-size: 9.5px;
+    font-size: 10px;
   }
   .gz-form-portal-card {
-    border-radius: 18px;
+    border-radius: 22px;
   }
   .gz-portal-form {
-    padding: 18px 14px 22px;
+    padding: 24px 20px 26px;
   }
   .gz-step-headline {
     gap: 10px;
@@ -2401,7 +2449,7 @@ html { scroll-behavior: smooth; }
 
   /* Compact Mobile File Dropzones */
   .gz-dropzone-inner {
-    padding: 14px 8px;
+    padding: 16px 12px;
     min-height: 84px;
     gap: 4px;
   }
@@ -2418,8 +2466,8 @@ html { scroll-behavior: smooth; }
 
   /* Consent Box & Navigation Buttons */
   .gz-consent-box {
-    padding: 12px 14px;
-    border-radius: 12px;
+    padding: 14px 16px;
+    border-radius: 14px;
     margin-top: 10px;
   }
   .gz-consent-label {
@@ -2430,8 +2478,8 @@ html { scroll-behavior: smooth; }
   .gz-wizard-footer {
     flex-direction: column-reverse;
     gap: 10px;
-    margin-top: 20px;
-    padding-top: 16px;
+    margin-top: 22px;
+    padding-top: 18px;
   }
   .gz-step-indicator-text {
     text-align: center;
@@ -2477,19 +2525,52 @@ html { scroll-behavior: smooth; }
 }
 
 @media (max-width: 480px) {
-  .gz-wrap { padding: 0 14px; }
-  .gz-form-wrap { padding: 0 12px; }
-  .gz-section { padding: 30px 0; }
-  .gz-hero-frame { max-width: 290px; }
-  .gz-studio-card { border-radius: 20px; }
+  /* Generous 18px gutters on smaller mobile devices Across All Components */
+  .gz-wrap,
+  .gz-wrap.gz-section,
+  .gz-form-wrap,
+  .gz-form-wrap.gz-section,
+  .gz-faq-wrap {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+  .gz-section {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+  .gz-hero-frame { max-width: 300px; }
+  .gz-studio-card { border-radius: 22px; }
+  .gz-studio-bottom-badge {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 8px 10px;
+    border-radius: 14px;
+    gap: 8px;
+  }
+  .gz-studio-badge-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+  }
+  .gz-studio-badge-text strong {
+    font-size: 11.5px;
+  }
+  .gz-studio-badge-text span {
+    font-size: 10px;
+  }
 
-  /* Compact KPI Metric Grid on Narrow Screens */
+  /* Live Partner Portal Widget on Small Screens */
+  .gz-portal-widget {
+    padding: 18px 14px;
+    border-radius: 20px;
+  }
   .gz-portal-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
   .gz-portal-stat-tile {
-    padding: 10px 8px;
+    padding: 11px 10px;
   }
   .gz-stat-label {
     font-size: 8.5px;
@@ -2499,11 +2580,32 @@ html { scroll-behavior: smooth; }
     padding: 1px 4px;
   }
   .gz-stat-val {
-    font-size: 18px;
+    font-size: 19px;
   }
   .gz-stat-sub {
     font-size: 9.5px;
   }
+
+  /* Form Spacing Polish for Small Screens */
+  .gz-portal-stepper {
+    padding: 12px 10px;
+  }
+  .gz-portal-form {
+    padding: 20px 15px 22px;
+  }
+}
+
+@media (max-width: 360px) {
+  /* Extra compact fallback for narrow legacy screens (320px-360px) */
+  .gz-wrap,
+  .gz-wrap.gz-section,
+  .gz-form-wrap,
+  .gz-form-wrap.gz-section,
+  .gz-faq-wrap {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+  .gz-products { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 400px) {
