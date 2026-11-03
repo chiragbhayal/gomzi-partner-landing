@@ -3,9 +3,12 @@ import certs from "../assets/Seven Certification Logos Row.png";
 
 export default function CertStrip() {
   return (
-    <section className="gz-bg-beige">
+    <section className="gz-certs-strip">
       <div className="gz-wrap gz-certs">
-        <p>Manufactured to certified standards — 100% licensed and lab-tested.</p>
+        <div className="gz-certs-label">
+          <span className="gz-certs-badge">VERIFIED FACILITY</span>
+          <p>Direct In-House Production • 100% Licensed &amp; Lab-Tested</p>
+        </div>
         <img
           src={certs}
           alt="Certifications: ISO, GMP, FSSAI, FDA, Kosher, HACCP, Halal"

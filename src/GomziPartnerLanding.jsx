@@ -24,6 +24,7 @@ import ApplicationForm from "./components/ApplicationForm";
 import Faq from "./components/Faq";
 import FinalCta from "./components/FinalCta";
 import Footer from "./components/Footer";
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 // Re-export individual components for modular reusability
 export {
@@ -41,6 +42,7 @@ export {
   Faq,
   FinalCta,
   Footer,
+  WhatsAppFloat,
 };
 
 export default function GomziPartnerLanding() {
@@ -62,6 +64,7 @@ export default function GomziPartnerLanding() {
         <FinalCta />
       </main>
       <Footer />
+      <WhatsAppFloat />
     </div>
   );
 }
