@@ -6,11 +6,18 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+
+  // Exact 8 items initially: 4 on top row, 4 on bottom row on desktop
+  const INITIAL_LIMIT = 8;
 
   // Fetch exclusively live products from backend API (VITE_API_URL)
   const fetchLiveProducts = async () => {
     setLoading(true);
     setError(null);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
 
     try {
       const apiBase =
@@ -18,7 +25,10 @@ export default function Products() {
         import.meta.env?.VITE_API_BASE_URL ||
         "http://localhost:3005";
 
-      const res = await fetch(`${apiBase}/public/v1/products?limit=500`);
+      const res = await fetch(`${apiBase}/public/v1/products?limit=500`, {
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
       if (!res.ok) {
         throw new Error(`API responded with status: ${res.status}`);
       }
@@ -178,6 +188,13 @@ export default function Products() {
       ? products
       : products.filter((p) => p.category === activeCategory);
 
+  // Exact 8 items displayed initially (4 on top row, 4 on bottom row)
+  const displayedProducts = showAll
+    ? filteredProducts
+    : filteredProducts.slice(0, INITIAL_LIMIT);
+
+  const hasMore = filteredProducts.length > INITIAL_LIMIT;
+
   return (
     <section id="products" className="gz-bg-cream">
       <div className="gz-wrap gz-section">
@@ -212,7 +229,10 @@ export default function Products() {
                   role="tab"
                   aria-selected={isActive}
                   className={`gz-cat-tab${isActive ? " is-active" : ""}`}
-                  onClick={() => setActiveCategory(cat.id)}
+                  onClick={() => {
+                    setActiveCategory(cat.id);
+                    setShowAll(false);
+                  }}
                 >
                   <span>{cat.label}</span>
                   <span className="gz-cat-tab-count">({cat.count})</span>
@@ -222,10 +242,10 @@ export default function Products() {
           </div>
         )}
 
-        {/* Loading State Skeleton */}
+        {/* Loading State Skeleton (8 items: 4 on top, 4 on bottom) */}
         {loading && (
           <div className="gz-products" style={{ opacity: 0.7 }}>
-            {[1, 2, 3, 4, 5, 6].map((idx) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
               <article className="gz-product" key={idx} style={{ minHeight: 380, display: "flex", flexDirection: "column" }}>
                 <div className="gz-product-img" style={{ background: "#ede7e3", animation: "pulse 1.5s infinite" }} />
                 <div className="gz-product-body" style={{ gap: 12 }}>
@@ -276,45 +296,95 @@ export default function Products() {
 
         {/* Live Products Grid */}
         {!loading && !error && products.length > 0 && (
-          <div className="gz-products">
-            {filteredProducts.map((p) => (
-              <article className="gz-product" key={p.id || p.name}>
-                <div className="gz-product-img">
-                  {p.badge && <span className="gz-product-badge">{p.badge}</span>}
-                  {p.flavour && <span className="gz-product-flavour">{p.flavour}</span>}
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    loading="lazy"
-                    onError={(e) => {
-                      if (p.fallbackImage && e.currentTarget.src !== p.fallbackImage) {
-                        e.currentTarget.src = p.fallbackImage;
+          <>
+            <div className="gz-products">
+              {displayedProducts.map((p) => (
+                <article className="gz-product" key={p.id || p.name}>
+                  <div className="gz-product-img">
+                    {p.badge && <span className="gz-product-badge">{p.badge}</span>}
+                    {p.flavour && <span className="gz-product-flavour">{p.flavour}</span>}
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      loading="lazy"
+                      onError={(e) => {
+                        if (p.fallbackImage && e.currentTarget.src !== p.fallbackImage) {
+                          e.currentTarget.src = p.fallbackImage;
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="gz-product-body">
+                    <span className="gz-product-cat">{p.categoryLabel}</span>
+                    <h3>{p.name}</h3>
+                    <p className="gz-product-highlight">{p.highlight}</p>
+
+                    <div className="gz-product-pricing">
+                      <span className="gz-product-retail">₹{p.retailPrice?.toLocaleString("en-IN")}</span>
+                      {p.mrp && <span className="gz-product-mrp">₹{p.mrp?.toLocaleString("en-IN")}</span>}
+                    </div>
+
+                    <div className="gz-product-margin-pill">
+                      <span>🔒 Partner Profit</span>
+                      <strong>{p.marginTag || "Manufacturing Margin"}</strong>
+                    </div>
+
+                    <a href="#apply" className="gz-product-cta">
+                      Unlock Partner Pricing →
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {/* View All / Show More Products Action Button */}
+            {hasMore && (
+              <div className="gz-products-action-wrap">
+                <button
+                  type="button"
+                  className="gz-btn-view-all"
+                  onClick={() => {
+                    const nextState = !showAll;
+                    setShowAll(nextState);
+                    if (!nextState) {
+                      const section = document.getElementById("products");
+                      if (section) {
+                        section.scrollIntoView({ behavior: "smooth", block: "start" });
                       }
+                    }
+                  }}
+                  aria-expanded={showAll}
+                  aria-label={showAll ? "Show fewer products" : `View all ${filteredProducts.length} products`}
+                >
+                  <span>
+                    {showAll
+                      ? "Show Less Formulations"
+                      : `View All Products (${filteredProducts.length})`}
+                  </span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{
+                      transition: "transform 0.3s ease",
+                      transform: showAll ? "rotate(180deg)" : "rotate(0deg)",
                     }}
-                  />
-                </div>
-                <div className="gz-product-body">
-                  <span className="gz-product-cat">{p.categoryLabel}</span>
-                  <h3>{p.name}</h3>
-                  <p className="gz-product-highlight">{p.highlight}</p>
-
-                  <div className="gz-product-pricing">
-                    <span className="gz-product-retail">₹{p.retailPrice?.toLocaleString("en-IN")}</span>
-                    {p.mrp && <span className="gz-product-mrp">₹{p.mrp?.toLocaleString("en-IN")}</span>}
-                  </div>
-
-                  <div className="gz-product-margin-pill">
-                    <span>🔒 Partner Profit</span>
-                    <strong>{p.marginTag || "Manufacturing Margin"}</strong>
-                  </div>
-
-                  <a href="#apply" className="gz-product-cta">
-                    Unlock Partner Pricing →
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
+                    aria-hidden="true"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
+                <p className="gz-products-count-note">
+                  Showing {displayedProducts.length} of {filteredProducts.length} verified GOMZI formulations
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>
