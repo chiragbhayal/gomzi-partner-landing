@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef } from "react";
 import { submitApplication } from "../services/api";
 import { CONTACT } from "../constants/content";
 import { ArrowIcon, CheckIcon } from "./common/Icons";
+import CustomSelect from "./common/CustomSelect";
 
 /**
  * Reusable Form Field Wrapper with Clean Floating/Elevated Label
@@ -547,16 +548,18 @@ export default function ApplicationForm() {
                   {/* Line 4: ID proof type selector */}
                   <div>
                     <Field label="Select Government ID Type" required>
-                      <select name="idType" required defaultValue="" className="gz-select">
-                        <option value="" disabled>
-                          Select the document type you uploaded above
-                        </option>
-                        <option>Aadhaar card</option>
-                        <option>PAN card</option>
-                        <option>Driving licence</option>
-                        <option>Passport</option>
-                        <option>Voter ID</option>
-                      </select>
+                      <CustomSelect
+                        name="idType"
+                        required
+                        placeholder="Select the document type you uploaded above"
+                        options={[
+                          { value: "Aadhaar card", label: "Aadhaar card" },
+                          { value: "PAN card", label: "PAN card" },
+                          { value: "Driving licence", label: "Driving licence" },
+                          { value: "Passport", label: "Passport" },
+                          { value: "Voter ID", label: "Voter ID" },
+                        ]}
+                      />
                     </Field>
                   </div>
                 </div>
@@ -602,16 +605,18 @@ export default function ApplicationForm() {
                   {/* Line 1: Active client base and Fee per client */}
                   <div className="gz-grid-2">
                     <Field label="Active Monthly Client Base" required helper="Number of clients you actively coach">
-                      <select name="activeClients" required defaultValue="" className="gz-select">
-                        <option value="" disabled>
-                          Select active trainee range
-                        </option>
-                        <option>1–10 clients</option>
-                        <option>11–25 clients</option>
-                        <option>26–50 clients</option>
-                        <option>51–100 clients</option>
-                        <option>100+ clients (Pro Studio)</option>
-                      </select>
+                      <CustomSelect
+                        name="activeClients"
+                        required
+                        placeholder="Select active trainee range"
+                        options={[
+                          { value: "1–10 clients", label: "1–10 clients" },
+                          { value: "11–25 clients", label: "11–25 clients" },
+                          { value: "26–50 clients", label: "26–50 clients" },
+                          { value: "51–100 clients", label: "51–100 clients" },
+                          { value: "100+ clients (Pro Studio)", label: "100+ clients (Pro Studio)" },
+                        ]}
+                      />
                     </Field>
                     <Field label="Average Training Fee Per Client (₹)" required helper="Your monthly personal training fee">
                       <input
@@ -649,11 +654,15 @@ export default function ApplicationForm() {
                   {/* Line 3: Primary training mode */}
                   <div>
                     <Field label="Primary Training Mode">
-                      <select name="trainingMode" defaultValue="Gym / in-person" className="gz-select">
-                        <option>Gym / in-person personal training</option>
-                        <option>Online fitness &amp; nutrition coaching</option>
-                        <option>Hybrid (Both in-person and online)</option>
-                      </select>
+                      <CustomSelect
+                        name="trainingMode"
+                        defaultValue="Gym / in-person personal training"
+                        options={[
+                          { value: "Gym / in-person personal training", label: "Gym / in-person personal training" },
+                          { value: "Online fitness & nutrition coaching", label: "Online fitness & nutrition coaching" },
+                          { value: "Hybrid (Both in-person and online)", label: "Hybrid (Both in-person and online)" },
+                        ]}
+                      />
                     </Field>
                   </div>
                 </div>

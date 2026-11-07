@@ -831,60 +831,121 @@ html { scroll-behavior: smooth; }
 /* Benefits Section & Live Partner Portal */
 .gz-split { display: flex; flex-wrap: wrap; gap: 44px; align-items: center; }
 .gz-split > * { flex: 1 1 420px; min-width: 0; }
+
+.gz-benefits-eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c45822;
+  background: #fbf2eb;
+  border: 1px solid rgba(226, 114, 55, 0.28);
+  padding: 5px 14px;
+  border-radius: 999px;
+  width: fit-content;
+  margin-bottom: 12px;
+}
+.gz-pill-star { font-size: 12px; color: #e27237; }
+.gz-title-accent {
+  background: linear-gradient(135deg, #e27237 0%, #993208 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .gz-benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 24px; }
 .gz-benefit-card {
   display: flex;
   gap: 14px;
   align-items: flex-start;
   padding: 16px 18px;
-  border-radius: 16px;
-  background: #fff;
-  border: 1px solid var(--line-2);
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(91, 44, 30, 0.12);
+  box-shadow: 0 4px 12px -4px rgba(91, 44, 30, 0.04);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .gz-benefit-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   border-color: rgba(226, 114, 55, 0.45);
-  box-shadow: 0 10px 28px -6px rgba(58, 26, 16, 0.08);
-  background: #fdfaf8;
+  box-shadow: 0 14px 28px -6px rgba(58, 26, 16, 0.1);
+  background: #fffdfc;
 }
 .gz-benefit-check {
   flex: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: #faf2ec;
-  border: 1.5px solid rgba(226, 114, 55, 0.35);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fdf5ef 0%, #faece2 100%);
+  border: 1.5px solid rgba(226, 114, 55, 0.28);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #e27237;
+  color: #c45822;
+  transition: all 0.22s ease;
+}
+.gz-benefit-card:hover .gz-benefit-check {
+  background: #c45822;
+  color: #ffffff;
+  border-color: #c45822;
+  transform: scale(1.05);
+}
+.gz-benefit-info { flex: 1; min-width: 0; }
+.gz-benefit-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 3px;
+  flex-wrap: wrap;
 }
 .gz-benefit-card h3 {
   margin: 0;
   font-weight: 800;
   font-size: 15px;
-  color: var(--brown);
+  color: var(--brown-deep);
   font-family: var(--display);
+  letter-spacing: -0.01em;
+}
+.gz-benefit-micro-tag {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: #c45822;
+  background: #fdf5ef;
+  border: 1px solid rgba(226, 114, 55, 0.2);
+  padding: 1px 6px;
+  border-radius: 999px;
+  white-space: nowrap;
 }
 .gz-benefit-card p {
   margin: 4px 0 0;
   font-size: 13px;
   color: var(--body);
-  opacity: 0.85;
-  line-height: 1.45;
+  opacity: 0.86;
+  line-height: 1.48;
 }
 
-/* High-Tech Realistic Partner Portal Preview Card */
+/* High-Tech Obsidian Luxury Partner Portal Preview Card */
 .gz-portal-widget {
-  background: linear-gradient(145deg, #28120a 0%, #170905 100%);
+  background: linear-gradient(150deg, #19100c 0%, #110906 50%, #0a0402 100%);
   border-radius: 28px;
-  border: 1.5px solid rgba(226, 114, 55, 0.35);
+  border: 1px solid rgba(226, 114, 55, 0.38);
   padding: 26px 28px;
   color: #fff;
-  box-shadow: 0 32px 80px -20px rgba(40, 18, 10, 0.65), 0 0 35px -5px rgba(226, 114, 55, 0.15);
+  box-shadow: 0 32px 80px -20px rgba(24, 15, 10, 0.75), 0 0 45px -10px rgba(226, 114, 55, 0.2);
   position: relative;
   overflow: hidden;
+}
+.gz-portal-widget::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, #e27237 0%, #f59e0b 50%, #5b2c1e 100%);
 }
 .gz-portal-top-bar {
   display: flex;
@@ -896,19 +957,39 @@ html { scroll-behavior: smooth; }
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   flex-wrap: wrap;
 }
+.gz-portal-top-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.gz-portal-dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.gz-pdot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+.gz-pdot-1 { background: #f87171; }
+.gz-pdot-2 { background: #fbbf24; }
+.gz-pdot-3 { background: #4ade80; }
+
 .gz-portal-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 11px;
+  gap: 7px;
+  font-size: 10.5px;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: rgba(34, 197, 94, 0.15);
+  background: rgba(34, 197, 94, 0.16);
   color: #4ade80;
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  padding: 5px 12px;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  padding: 4px 11px;
   border-radius: 999px;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.15);
 }
 .gz-pulse-dot {
   width: 7px;
@@ -925,16 +1006,41 @@ html { scroll-behavior: smooth; }
 .gz-portal-trainer-chip {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12.5px;
+  gap: 7px;
+  font-size: 12px;
   color: #f1e3dc;
-  font-weight: 600;
+  font-weight: 700;
   background: rgba(255, 255, 255, 0.08);
-  padding: 4px 12px;
+  padding: 4px 11px 4px 5px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
 }
-.gz-trainer-avatar { font-size: 14px; }
+.gz-trainer-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #e27237;
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gz-trainer-name { color: #f1e3dc; }
+.gz-trainer-verified {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .gz-portal-grid {
   display: grid;
@@ -942,16 +1048,22 @@ html { scroll-behavior: smooth; }
   gap: 12px;
 }
 .gz-portal-stat-tile {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 16px 18px;
   transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
 }
 .gz-portal-stat-tile:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(226, 114, 55, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(226, 114, 55, 0.45);
   transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.gz-portal-stat-tile.gz-stat-highlight {
+  background: linear-gradient(135deg, rgba(226, 114, 55, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-color: rgba(226, 114, 55, 0.35);
 }
 .gz-stat-header {
   display: flex;
@@ -960,9 +1072,9 @@ html { scroll-behavior: smooth; }
   gap: 8px;
 }
 .gz-stat-label {
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
-  color: #d4c3bb;
+  color: #e8a584;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -976,22 +1088,22 @@ html { scroll-behavior: smooth; }
   letter-spacing: 0.02em;
 }
 .gz-stat-trend.positive {
-  background: rgba(34, 197, 94, 0.2);
+  background: rgba(34, 197, 94, 0.22);
   color: #4ade80;
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  border: 1px solid rgba(34, 197, 94, 0.35);
 }
 .gz-stat-val {
   font-family: var(--display);
-  font-size: 27px;
+  font-size: 28px;
   font-weight: 800;
-  color: #fff;
+  color: #ffffff;
   margin: 6px 0 2px;
   line-height: 1.15;
   letter-spacing: -0.01em;
 }
 .gz-stat-sub {
   font-size: 11.5px;
-  color: #b8a69e;
+  color: #bfaea5;
   margin: 0;
   line-height: 1.35;
 }
@@ -1006,12 +1118,24 @@ html { scroll-behavior: smooth; }
 .gz-activity-title {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  align-items: center;
+  font-size: 10.5px;
   font-weight: 800;
-  color: #e27237;
+  color: #e8a584;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.gz-activity-live-pill {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #4ade80;
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  padding: 2px 7px;
+  border-radius: 999px;
 }
 .gz-activity-list {
   display: flex;
@@ -1025,52 +1149,113 @@ html { scroll-behavior: smooth; }
   font-size: 12px;
   color: #e8ded9;
   padding: 4px 0;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.07);
   gap: 10px;
 }
 .gz-activity-item:last-child { border-bottom: none; }
+.gz-activity-client-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.gz-client-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(226, 114, 55, 0.25);
+  color: #f69463;
+  font-size: 9.5px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(226, 114, 55, 0.35);
+  flex: none;
+}
+.gz-client-product {
+  opacity: 0.7;
+  margin-left: 6px;
+  font-size: 11.5px;
+}
+.gz-activity-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
 .gz-profit-tag {
   font-weight: 800;
   color: #4ade80;
-  background: rgba(34, 197, 94, 0.18);
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.3);
   padding: 2px 8px;
   border-radius: 6px;
   font-size: 11.5px;
 }
 
+/* Frosted Luxury Voucher Card */
 .gz-portal-coupon-box {
   margin-top: 16px;
-  background: #ffffff;
-  color: var(--brown-deep);
-  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border: 1.5px dashed rgba(226, 114, 55, 0.45);
+  border-radius: 18px;
   padding: 14px 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
 }
 .gz-coupon-info {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 .gz-coupon-label {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #e27237;
+  color: #e8a584;
+}
+.gz-coupon-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .gz-coupon-code {
   font-family: var(--display);
-  font-size: 16px;
+  font-size: 16.5px;
   font-weight: 800;
-  color: var(--brown);
-  letter-spacing: 0.04em;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.gz-coupon-code:hover {
+  color: #e27237;
+  text-decoration: underline;
+}
+.gz-code-copied-chip {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #15803d;
+  background: #ecfdf5;
+  border: 1px solid #bbf7d0;
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+.gz-coupon-url {
+  color: #bfaea5;
+  font-size: 11.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .gz-copy-btn {
-  background: linear-gradient(135deg, #5b2c1e 0%, #7c3a27 100%);
+  background: linear-gradient(135deg, #e27237 0%, #c45822 100%);
   color: #fff;
   border: none;
   padding: 9px 18px;
@@ -1080,12 +1265,17 @@ html { scroll-behavior: smooth; }
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(91, 44, 30, 0.3);
+  box-shadow: 0 4px 14px rgba(226, 114, 55, 0.35);
+  flex: none;
 }
 .gz-copy-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(91, 44, 30, 0.45);
-  background: linear-gradient(135deg, #442015 0%, #68301f 100%);
+  box-shadow: 0 6px 18px rgba(226, 114, 55, 0.45);
+  background: linear-gradient(135deg, #f57f40 0%, #c45822 100%);
+}
+.gz-copy-btn.copied {
+  background: #16a34a;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
 }
 .gz-portal-guarantee {
   display: flex;
@@ -1095,6 +1285,10 @@ html { scroll-behavior: smooth; }
   font-size: 12px;
   color: #b8a69e;
   line-height: 1.45;
+}
+.gz-guarantee-shield {
+  font-size: 14px;
+  flex: none;
 }
 .gz-portal-guarantee strong { color: #f1e3dc; }
 
@@ -1615,6 +1809,181 @@ html { scroll-behavior: smooth; }
   resize: vertical;
   min-height: 72px;
   line-height: 1.5;
+}
+
+/* ==========================================================================
+   Luxury Custom Dropdown System (Replaces Native OS Blue Selects)
+   ========================================================================== */
+.gz-custom-select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.gz-custom-select-native {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  pointer-events: none;
+}
+
+.gz-custom-select-trigger {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: inherit;
+  font-size: 14.5px;
+  color: var(--ink);
+  background: #ffffff;
+  border: 1.5px solid #dfd3cb;
+  border-radius: 12px;
+  padding: 12px 16px;
+  min-height: 48px;
+  text-align: left;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gz-custom-select-trigger:hover {
+  border-color: #cbb8ad;
+  background: #fffcf9;
+}
+
+.gz-custom-select-wrap.is-open .gz-custom-select-trigger,
+.gz-custom-select-trigger:focus-visible {
+  border-color: #e27237;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(226, 114, 55, 0.14), 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: #ffffff;
+}
+
+.gz-custom-select-wrap.is-invalid .gz-custom-select-trigger {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.14);
+}
+
+.gz-custom-select-value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+  color: #2b1810;
+}
+
+.gz-custom-select-value.is-placeholder {
+  color: #a4948c;
+  font-weight: 400;
+}
+
+.gz-custom-select-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #7c6255;
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+}
+
+.gz-custom-select-wrap.is-open .gz-custom-select-arrow {
+  transform: rotate(180deg);
+  color: #e27237;
+}
+
+.gz-custom-select-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: #ffffff;
+  border: 1.5px solid #ebdcd0;
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 18px 40px -6px rgba(59, 24, 13, 0.18), 0 6px 16px rgba(0, 0, 0, 0.06);
+  max-height: 260px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: gzDropdownSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes gzDropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.gz-custom-select-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.gz-custom-select-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gz-custom-select-menu::-webkit-scrollbar-thumb {
+  background: #ebdcd0;
+  border-radius: 999px;
+}
+
+.gz-custom-select-menu::-webkit-scrollbar-thumb:hover {
+  background: #d4b8a5;
+}
+
+.gz-custom-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3b2014;
+  cursor: pointer;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+
+.gz-custom-select-option:hover,
+.gz-custom-select-option.is-focused {
+  background: #faf4ef;
+  color: #e27237;
+}
+
+.gz-custom-select-option.is-selected {
+  background: rgba(226, 114, 55, 0.12);
+  color: #c4571e;
+  font-weight: 700;
+}
+
+.gz-custom-select-option-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gz-custom-select-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #e27237;
+  flex-shrink: 0;
 }
 
 /* Luxury Drag-and-Drop Style Upload Zones */
@@ -2576,10 +2945,14 @@ html { scroll-behavior: smooth; }
   }
 
   /* Critical iOS Input Polish (Prevents Safari 16px Auto-Zoom) */
-  .gz-input, .gz-textarea, .gz-select {
+  .gz-input, .gz-textarea, .gz-select, .gz-custom-select-trigger {
     font-size: 16px !important;
     min-height: 48px;
     border-radius: 12px;
+    padding: 12px 14px;
+  }
+  .gz-custom-select-option {
+    font-size: 15px;
     padding: 12px 14px;
   }
 
