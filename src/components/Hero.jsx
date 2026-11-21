@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import heroVideo from "../assets/hero-video.mp4";
 import heroPoster from "../assets/hero.jpg";
 import { Icon, ArrowIcon } from "./common/Icons";
@@ -7,11 +7,118 @@ export default function Hero() {
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef(null);
 
+  // Bulletproof continuous infinite loop engine:
+  // Eliminates browser decode buffer stalls, Chromium 'loop' exhaustion,
+  // autoplay policy blocks, and tab-throttling freezes.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Direct DOM property enforcement (React JSX attributes don't guarantee DOM property sync)
+    video.muted = isMuted;
+    video.defaultMuted = isMuted;
+    video.loop = true;
+    video.playsInline = true;
+    video.setAttribute("playsinline", "true");
+    video.setAttribute("webkit-playsinline", "true");
+
+    const safePlay = () => {
+      if (!video) return;
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {
+          // If browser policy blocked unmuted playback on loop boundary, fallback to muted and keep playing
+          if (!video.muted) {
+            video.muted = true;
+            setIsMuted(true);
+            video.play().catch(() => {});
+          }
+        });
+      }
+    };
+
+    // Layer 1: Native 'ended' event fallback
+    const handleEnded = () => {
+      video.currentTime = 0;
+      safePlay();
+    };
+
+    // Layer 2: Pause event interceptor (resets and resumes if halted near or at loop end)
+    const handlePause = () => {
+      if (video.ended || (video.duration && video.currentTime >= video.duration - 0.3)) {
+        video.currentTime = 0;
+        safePlay();
+      }
+    };
+
+    // Layer 3: Stalled buffer recovery
+    const handleStalled = () => {
+      if (video.paused) {
+        safePlay();
+      }
+    };
+
+    // Layer 4: Near-end boundary monitor (prevents frozen last frame if 'ended' fails to fire)
+    const handleTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.15) {
+        if (video.paused) {
+          video.currentTime = 0;
+          safePlay();
+        }
+      }
+    };
+
+    video.addEventListener("ended", handleEnded);
+    video.addEventListener("pause", handlePause);
+    video.addEventListener("stalled", handleStalled);
+    video.addEventListener("timeupdate", handleTimeUpdate);
+
+    // Initial trigger
+    safePlay();
+
+    // Layer 5: Active watchdog heartbeat (checks every 800ms to guarantee zero freezing)
+    const watchdogTimer = setInterval(() => {
+      if (video.paused && !document.hidden) {
+        if (video.ended || (video.duration && video.currentTime >= video.duration - 0.3)) {
+          video.currentTime = 0;
+        }
+        safePlay();
+      }
+    }, 800);
+
+    // Layer 6: Tab visibility recovery (instantly resumes when user switches back to tab)
+    const handleVisibilityChange = () => {
+      if (!document.hidden && video.paused) {
+        safePlay();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      video.removeEventListener("ended", handleEnded);
+      video.removeEventListener("pause", handlePause);
+      video.removeEventListener("stalled", handleStalled);
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      clearInterval(watchdogTimer);
+    };
+  }, []);
+
+  // Synchronize mute state safely
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
+
   const toggleMute = () => {
     if (videoRef.current) {
       const nextMuted = !videoRef.current.muted;
       videoRef.current.muted = nextMuted;
       setIsMuted(nextMuted);
+      if (videoRef.current.paused) {
+        videoRef.current.play().catch(() => {});
+      }
     }
   };
 
@@ -85,7 +192,7 @@ export default function Hero() {
                     className={`gz-studio-sound-pill ${!isMuted ? "is-unmuted" : ""}`}
                     onClick={toggleMute}
                     aria-label={isMuted ? "Unmute founder briefing" : "Mute founder briefing"}
-                    title={isMuted ? "Click to hear Chirag speak" : "Click to mute audio"}
+                    title={isMuted ? "Click to hear Dt. Chirag Pandey speak" : "Click to mute audio"}
                   >
                     {isMuted ? (
                       <>
@@ -136,9 +243,15 @@ export default function Hero() {
                   poster={heroPoster}
                   autoPlay
                   loop
-                  muted
+                  muted={isMuted}
                   playsInline
-                  preload="metadata"
+                  preload="auto"
+                  onEnded={() => {
+                    if (videoRef.current) {
+                      videoRef.current.currentTime = 0;
+                      videoRef.current.play().catch(() => {});
+                    }
+                  }}
                   onClick={toggleMute}
                   title="Click video to toggle audio"
                 >
@@ -150,12 +263,12 @@ export default function Hero() {
               <div className="gz-studio-pedestal">
                 <div className="gz-pedestal-identity">
                   <div className="gz-pedestal-avatar-box">
-                    <img src={heroPoster} alt="Chirag Bhayal" className="gz-pedestal-avatar" />
+                    <img src={heroPoster} alt="Dt. Chirag Pandey" className="gz-pedestal-avatar" />
                     <span className="gz-pedestal-avatar-tick" title="Verified Founder">✓</span>
                   </div>
                   <div className="gz-pedestal-meta">
                     <div className="gz-pedestal-name-line">
-                      <span className="gz-pedestal-name">Chirag Bhayal</span>
+                      <span className="gz-pedestal-name">Dt. Chirag Pandey</span>
                       <span className="gz-pedestal-tag">Founder &amp; MD</span>
                     </div>
                     <span className="gz-pedestal-sub">GOMZI Nutrition · Direct Factory Program</span>
