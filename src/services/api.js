@@ -7,7 +7,11 @@
 const DEFAULT_TIMEOUT_MS = 45000; // 45s for file uploads over mobile connections
 
 // Loaded exclusively from environment variable (.env)
-const API_BASE_URL = import.meta.env?.VITE_API_URL || import.meta.env?.VITE_API_BASE_URL || "";
+const API_BASE_URL = (
+  import.meta.env?.VITE_API_URL ||
+  import.meta.env?.VITE_API_BASE_URL ||
+  ""
+).replace(/\/+$/, "");
 
 /**
  * Uploads a single document (certificate, ID, or photo) to the backend S3 endpoint.
@@ -48,7 +52,7 @@ async function uploadSingleFile(apiBase, file, remark) {
  * @returns {Promise<Object>} Resolves with JSON response on success.
  */
 export async function submitApplication(formData, options = {}) {
-  const apiBase = options.apiBaseUrl || API_BASE_URL;
+  const apiBase = (options.apiBaseUrl || API_BASE_URL).replace(/\/+$/, "");
   const timeoutMs = options.timeoutMs || DEFAULT_TIMEOUT_MS;
 
   // Extract fields from formData

@@ -20,10 +20,11 @@ export default function Products() {
     const timeoutId = setTimeout(() => controller.abort(), 6000);
 
     try {
-      const apiBase =
+      const apiBase = (
         import.meta.env?.VITE_API_URL ||
         import.meta.env?.VITE_API_BASE_URL ||
-        "http://localhost:3005";
+        "http://localhost:3005"
+      ).replace(/\/+$/, "");
 
       const res = await fetch(`${apiBase}/public/v1/products?limit=500`, {
         signal: controller.signal,
@@ -264,7 +265,7 @@ export default function Products() {
           <div style={{ textAlign: "center", padding: "48px 24px", background: "#fff", borderRadius: 16, border: "1px solid var(--line-2)", marginTop: 24 }}>
             <h3 style={{ color: "var(--brown)", marginBottom: 8, fontSize: 18 }}>Unable to Load Live Products</h3>
             <p style={{ color: "var(--muted)", fontSize: 14, maxWidth: 480, margin: "0 auto 20px" }}>
-              Could not retrieve GOMZI products from the backend API. Please make sure the API server is running on <code>http://localhost:3005</code>.
+              Could not retrieve GOMZI products from the backend API. Please try again in a moment.
             </p>
             <button
               onClick={fetchLiveProducts}

@@ -65,3 +65,11 @@ npm run preview
 Form submission is handled by `src/services/api.js`.
 - It POSTs `multipart/form-data` to `/api/partner-applications` (or custom endpoint via `VITE_API_BASE_URL` in `.env`).
 - Payload fields: `fullName`, `age`, `email`, `phone`, `address`, `city`, `state`, `pincode`, `certificationName`, `certifyingInstitute`, `certificationYear`, `experienceYears`, `certificate` (file), `photo` (file), `idType`, `idProof` (file), `activeClients`, `feePerClient`, `instagram`, `facebookOrYoutube`, `trainingMode`, `consent`.
+
+## Partner approval and demo policy acceptance
+
+- Accepting an application in the RAG admin panel sends an approval email to the applicant with `chiragpandey600@gmail.com` in CC. The email includes the demo policy and a private review link valid for 7 days.
+- Set `PARTNER_POLICY_PAGE_URL` in the API environment to its public policy page URL: `http://localhost:3005/public/v1/partner-policy` during local development. Use the deployed, publicly reachable HTTPS API URL for real applicants.
+- The applicant enters their name, ticks the acceptance checkbox, and confirms. Opening the email or visiting the page does not record acceptance.
+- Admins can view the policy version, email status, accepting name/email, acceptance date, and exact accepted policy text on the inquiry detail page. Failed or expired invitations can be resent from the Pro Partner page.
+- The policy is clearly labelled **demo only**. Replace `DEMO_POLICY` in the API's `src/helpers/partner-policy.js` and increment its version when the final policy is ready. The final policy will require separate acceptance.
